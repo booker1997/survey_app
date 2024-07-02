@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Survey</title>
+    <style>
+      .phrase {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+      .question {
+        margin-top: 20px;
+      }
+      .progress {
+        margin-top: 20px;
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Survey</h1>
+    <p class="phrase">Need identified: {{ phrase }}</p>
+    <div class="progress">Progress: {{ total_phrases - remaining_phrases }}/{{ total_phrases }}</div>
+    <form method="post">
+        {% if index == 0 %}
+        <input type="hidden" name="name" value="{{ name }}">
+        <input type="hidden" name="email" value="{{ email }}">
+        {% else %}
+        <input type="hidden" name="name" value="{{ name }}">
+        <input type="hidden" name="email" value="{{ email }}">
+        {% endif %}
+      <div class="question">
+        <p><strong>{{ questions[0] }}</strong></p>
+        <label><input type="radio" name="impactful" value="Strongly agree" required> Strongly agree</label><br>
+        <label><input type="radio" name="impactful" value="Agree"> Agree</label><br>
+        <label><input type="radio" name="impactful" value="Disagree"> Disagree</label><br>
+        <label><input type="radio" name="impactful" value="Strongly disagree"> Strongly disagree</label>
+      </div>
+      <div class="question">
+        <p><strong>{{ questions[1] }}</strong></p>
+        <label><input type="radio" name="implicit" value="Strongly agree" required> Strongly agree</label><br>
+        <label><input type="radio" name="implicit" value="Agree"> Agree</label><br>
+        <label><input type="radio" name="implicit" value="Disagree"> Disagree</label><br>
+        <label><input type="radio" name="implicit" value="Strongly disagree"> Strongly disagree</label>
+      </div>
+      <div class="question">
+        <p><strong>{{ questions[2] }}</strong></p>
+        <label><input type="radio" name="obvious" value="Strongly agree" required> Strongly agree</label><br>
+        <label><input type="radio" name="obvious" value="Agree"> Agree</label><br>
+        <label><input type="radio" name="obvious" value="Disagree"> Disagree</label><br>
+        <label><input type="radio" name="obvious" value="Strongly disagree"> Strongly disagree</label>
+      </div>
+      <div class="question">
+        <p><strong>{{ questions[3] }}</strong></p>
+        <label><input type="radio" name="inefficient" value="Strongly agree" required> Strongly agree</label><br>
+        <label><input type="radio" name="inefficient" value="Agree"> Agree</label><br>
+        <label><input type="radio" name="inefficient" value="Disagree"> Disagree</label><br>
+        <label><input type="radio" name="inefficient" value="Strongly disagree"> Strongly disagree</label>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

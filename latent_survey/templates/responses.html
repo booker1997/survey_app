@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Survey Responses</title>
+  </head>
+  <body>
+    <h1>Survey Responses</h1>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Phrase</th>
+          <th>Impactful</th>
+          <th>Implicit</th>
+          <th>Obvious</th>
+          <th>Inefficient</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td>{{ row['phrase'] }}</td>
+          <td>{{ row['impactful'] }}</td>
+          <td>{{ row['implicit'] }}</td>
+          <td>{{ row['obvious'] }}</td>
+          <td>{{ row['inefficient'] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
