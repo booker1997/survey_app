@@ -32,9 +32,10 @@ def init_csv(CSV_FILE):
         df = pd.DataFrame(columns=['name','email','video','group', 'phrase', 'impactful', 'implicit', 'obvious', 'inefficient'])
         df.to_csv(CSV_FILE, index=False)
 
-@app.route('/')
-def index():
-    return redirect(url_for('instructions'))
+# @app.route('/')
+# def index():
+#     print('HERE',url_for('instructions'))
+#     return redirect(url_for('instructions'))
 
 @app.route('/<video>/<group>/instructions', methods=['GET', 'POST'])
 def instructions(video, group):
