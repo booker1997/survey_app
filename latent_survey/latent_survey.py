@@ -9,20 +9,8 @@ app = Flask(__name__)
 app.secret_key = 'IDEATION2024'
 
 # Set up Firebase Realtime Database
-firebase_cred = {
-  "type": "service_account",
-  "project_id": "needs-proj",
-  "private_key_id": "ac20b236f5e294f18bf15fb1c6df3a95e7bf2a06",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDAcpx9rw2revaw\n3KtpAvK1jtYnA6zxO/BVqZbSlTll8SjHcH0CrKhAqCXlGA1kaLPDhldPQs8vOSWc\nCe9Yi1JMgRJsNSp1O8weUpmS8bGS1lLMiEZhtdQ8I9QdDWNDY3+UTtLARTpN25kR\nxWY4HQy5mGkEarijaC0gcsmHAu5vZoEs/H+6qUstceqdyUmAHhfUScet+CtHD8C/\njPu0hwlMF58n+uZ7DzhsS7bG7bl8tEB5gG5FBq7+H1BGT+nmFg04dR//RS2gz8gk\nWElIwnyu39p2BFoyD4YfzYxul70nXpyXuMpcVpb8r/NlxJQYscytRCDPJE05g1/H\nV6hnBQ3FAgMBAAECggEABp7KuF4hw8DmpJ3qvaGO1OUVg+ER/Xh445GCcTsV7uZV\nZ0r82e8zmInQR+nEaCxb5sGD1mOveenm28/RroOYcK5OAm/vxnmoo3Bm/RGYcLsz\nvPqBJVJaezkmTluMCyDsnh76DAg1ocEIqn5Wbl69ddMC5daABIsMZl3cher5Zdab\nEaQqpkXN4hoVlpvTZXxgXSo5dmqnsEiYC/1GDLQCsYelBg8vqtlQ/QopsqY4qqCV\nXudpZefS5TH1FGq9OOiUaq3FvhAArOaXbJafxI2WnzQ/TszMYlnJcviZQV9HGiyk\n/WtobdYTmqnOQ0bv4TRWkN/sjf2e5R0+W1nAa/LjMQKBgQDvKjJLh3uIsfLOy1cm\nw403/5Hv1MKIN000102LBWAeloHXz1fdisT31O+4s9yGVd6KGOvMgDtRAnEI5/35\ngE494f6Ijc5lk1Rq3xixRIO+oca8NL83SV6rvNX9EuhOO4pJ5dcM/7wuTY0ee5zB\nI3LtAkO3/U4++J5ou0jvPYyxyQKBgQDN/o/OS4pmO69KEnD/5d4MkLD1eBw/FlBV\nc0EVDSpHP5/SZO7q9Q+fMf+JBmpbplLm+ndqQ2DSim5DAtGcaPt+zQuiwp/5LJ8K\nBHZXcWI1BOFrk926QUw2j3k1ivmyxe6l65O/YL9DTHiDml0Pv5FzfJ4Gm6cPBYxm\nFsaWcxKaHQKBgQC7P+9W4UFgGeq/68ZVTD/RuyAYhRy1p46kM3m7wb6q1C3euLDT\nfKWQYEA7/V5IMwzkVHSxjShj2aSEU5audL1NiBZP9a7GKl6qufdMOxdm9qRxkF6x\nu5kKnvNvjBEjx0wTZYdE3ykHm6JEXoWxVb7SP7ajZAiSFvd3ikKlRSxVuQKBgQCx\n9D/3T3r4Zoc/zj6gUsxIvpag+GoudfBgYXjP3tevRV+kOl3LzHj6Zg8DKO+ozT7B\nG48d1adHOx+V9FFwdaEOIcTzjn70m3+o/8HcOK9Gbjju3oal6NMWL0ve3Xho4GUS\nITk6EzInyWAzEJ9kg3H7+qPpwX3IlFp9tx9HyZFAYQKBgES+Uyo0AqFmrIaDnZ+z\nQ+begxuFyneKr0rqTgssTb/ckwaD6JfrtR5Un7+k6fGMnFpo9/mAcQILGWyom3K/\ntd6hRhaWWXs3A7ZNw2HAshWOIrWuAKWSIaGaiyeEGjeEw3uGDrxtzmcIUjmeu3rr\nWYbAwvRFUJqmyWCAl1uc/ZHc\n-----END PRIVATE KEY-----\n",
-  "client_email": "firebase-adminsdk-inqqa@needs-proj.iam.gserviceaccount.com",
-  "client_id": "101100983857220373179",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-inqqa%40needs-proj.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
-cred = credentials.Certificate(firebase_cred)
+
+cred = credentials.Certificate('firebase_secret.json')
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://needs-proj-default-rtdb.firebaseio.com/'
 })
