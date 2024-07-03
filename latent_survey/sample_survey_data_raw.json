@@ -1,0 +1,47 @@
+{
+  "email": [
+    "test@mit",
+    "test2@gmail",
+    "test2@gmail"
+  ],
+  "group": [
+    "Group 3b",
+    "Group 2b",
+    "Group 2b"
+  ],
+  "impactful": [
+    "Agree",
+    "Agree",
+    "Disagree"
+  ],
+  "implicit": [
+    "Strongly agree",
+    "Agree",
+    "Agree"
+  ],
+  "inefficient": [
+    "Strongly agree",
+    "Strongly agree",
+    "Strongly disagree"
+  ],
+  "name": [
+    "test",
+    "test2",
+    "test2"
+  ],
+  "obvious": [
+    "Strongly agree",
+    "Strongly agree",
+    "Strongly disagree"
+  ],
+  "phrase": [
+    "Could be shorter and more compact, that might allow for more ease of movement",
+    "better placement of stuff around desk, such as bag",
+    "Make space on desk and connect mouse to display screen."
+  ],
+  "video": [
+    "vacuum",
+    "desk",
+    "desk"
+  ]
+}

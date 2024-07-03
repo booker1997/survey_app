@@ -11,11 +11,24 @@
       }
       .question {
         margin-top: 20px;
+        font-size: 1.2em;
       }
       .progress {
         margin-top: 20px;
         font-size: 1.2em;
         font-weight: bold;
+      }
+      .submit-button {
+        font-size: 1.5em; /* Increases the font size */
+        padding: 10px 20px; /* Adds padding to make the button larger */
+        background-color: #007bff; /* Background color */
+        color: white; /* Text color */
+        border: none; /* Removes border */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor on hover */
+      }
+      .submit-button:hover {
+        background-color: #0056b3; /* Darker background on hover */
       }
     </style>
   </head>
@@ -59,7 +72,7 @@
         <label><input type="radio" name="inefficient" value="Disagree"> Disagree</label><br>
         <label><input type="radio" name="inefficient" value="Strongly disagree"> Strongly disagree</label>
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit" class="submit-button">Submit</button>
     </form>
   </body>
 </html>
