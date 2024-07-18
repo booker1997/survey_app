@@ -15,6 +15,9 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://needs-proj-default-rtdb.firebaseio.com/'
 })
 
+# Global variable to store phrases
+actual_phrases = []
+
 # Reference to the Realtime Database
 database_ref = db.reference('responses')
 
@@ -37,23 +40,25 @@ def init_csv(CSV_FILE):
 #     print('HERE',url_for('instructions'))
 #     return redirect(url_for('instructions'))
 
-@app.route('/<video>/<group>/instructions', methods=['GET', 'POST'])
+@app.route('/<video>/<int:group>/instructions', methods=['GET', 'POST'])
 def instructions(video, group):
+    global actual_phrases
     session['name'] = request.form.get('name')
     session['email'] = request.form.get('email')
     groups = ['Group 1a', 'Group 1b', 'Group 2a', 'Group 2b', 'Group 3a', 'Group 3b']
-    print(video)
     if video == 'desk':
         needs_dict = pd.read_csv('data/need_groups_desk.csv')
         phrases = [[need for need in list(needs_dict[GROUP]) if type(need) == str] for GROUP in groups]
-        
+        actual_phrases = phrases[group] 
+        random.shuffle(actual_phrases)
         # File path for the CSV file
         session['CSV_FILE'] = 'data/responses_desk.csv'
         session['instructions_file'] = 'instructions_desk.html'
     else:
         needs_dict = pd.read_csv('data/need_groups_vacuum.csv')
         phrases = [[need for need in list(needs_dict[GROUP]) if type(need) == str] for GROUP in groups]
-        
+        actual_phrases = phrases[group] 
+        random.shuffle(actual_phrases)
         # File path for the CSV file
         session['CSV_FILE'] = 'data/responses_vacuum.csv'
         session['instructions_file'] = 'instructions_vacuum.html'
@@ -72,15 +77,15 @@ def instructions(video, group):
 @app.route('/<video>/<int:group>/survey/<name>/<email>/<int:index>', methods=['GET', 'POST'])
 def survey(video, group, name, email, index):
     groups = ['Group 1a', 'Group 1b', 'Group 2a', 'Group 2b', 'Group 3a', 'Group 3b']
-
-    if video == 'desk':
-        needs_dict = pd.read_csv('data/need_groups_desk.csv')
-        phrases = [[need for need in list(needs_dict[GROUP]) if type(need) == str] for GROUP in groups]
-    else:
-        needs_dict = pd.read_csv('data/need_groups_vacuum.csv')
-        phrases = [[need for need in list(needs_dict[GROUP]) if type(need) == str] for GROUP in groups]
+    global actual_phrases
+    # if video == 'desk':
+    #     needs_dict = pd.read_csv('data/need_groups_desk.csv')
+    #     phrases = [[need for need in list(needs_dict[GROUP]) if type(need) == str] for GROUP in groups]
+    # else:
+    #     needs_dict = pd.read_csv('data/need_groups_vacuum.csv')
+    #     phrases = [[need for need in list(needs_dict[GROUP]) if type(need) == str] for GROUP in groups]
     
-    phrase = phrases[group][index]
+    phrase = actual_phrases[index]
     person_group_text = groups[group]
     
     if request.method == 'POST':
@@ -92,14 +97,14 @@ def survey(video, group, name, email, index):
         }
         save_response(session['name'], session['email'], phrase, responses, video, person_group_text)
 
-        if index + 1 < len(phrases[group]):
+        if index + 1 < len(actual_phrases):
             return redirect(url_for('survey', phrase=phrase, video=video, group=group, name=name, email=email, index=index+1))
         else:
             return redirect(url_for('thank_you'))
 
     name = session.get('name', '')
     email = session.get('email', '')
-    total_phrases = len(phrases[group])
+    total_phrases = len(actual_phrases)
     remaining_phrases = total_phrases - index - 1
     
     return render_template('survey.html', phrase=phrase, index=index, total_phrases=total_phrases, remaining_phrases=remaining_phrases, questions=questions, video=video, group=group, name=name, email=email)
@@ -114,7 +119,19 @@ def view_responses():
     return render_template('responses.html', rows=df.to_dict(orient='records'))
 
 def save_response(name, email, phrase, responses, video, person_group_text):
-    # df = pd.read_csv(session['CSV_FILE'])
+    if responses["impactful"] == 'Strongly agree' or responses["impactful"] == 'Agree':
+        if responses["implicit"] == 'Strongly agree' or responses["implicit"] == 'Agree':
+            if responses["obvious"] == 'Strongly disagree' or responses["obvious"] == 'Disagree':
+                if responses["inefficient"] == 'Strongly disagree' or responses["inefficient"] == 'Disagree':
+                    latent = 1
+                else:
+                    latent = 0
+            else:
+                latent = 0
+        else:
+            latent = 0
+    else:
+        latent = 0
     new_entry = {
         'name': name,
         'email': email,
@@ -124,7 +141,8 @@ def save_response(name, email, phrase, responses, video, person_group_text):
         'impactful': responses["impactful"],
         'implicit': responses["implicit"],
         'obvious': responses["obvious"],
-        'inefficient': responses["inefficient"]
+        'inefficient': responses["inefficient"],
+        'latent': latent
     }
     # df = df.append(new_entry, ignore_index=True)
     # df.to_csv(session['CSV_FILE'], index=False)

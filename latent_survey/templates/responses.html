@@ -1,33 +1,65 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Survey Responses</title>
-  </head>
-  <body>
-    <h1>Survey Responses</h1>
-    <table border="1">
-      <thead>
-        <tr>
-          <th>Phrase</th>
-          <th>Impactful</th>
-          <th>Implicit</th>
-          <th>Obvious</th>
-          <th>Inefficient</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for row in rows %}
-        <tr>
-          <td>{{ row['phrase'] }}</td>
-          <td>{{ row['impactful'] }}</td>
-          <td>{{ row['implicit'] }}</td>
-          <td>{{ row['obvious'] }}</td>
-          <td>{{ row['inefficient'] }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survey Responses</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #007bff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Survey Responses</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Phrase</th>
+        <th>Impactful</th>
+        <th>Implicit</th>
+        <th>Obvious</th>
+        <th>Inefficient</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        <td>{{ row['phrase'] }}</td>
+        <td>{{ row['impactful'] }}</td>
+        <td>{{ row['implicit'] }}</td>
+        <td>{{ row['obvious'] }}</td>
+        <td>{{ row['inefficient'] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
 </html>

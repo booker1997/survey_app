@@ -1,39 +1,87 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- meta tags and title here -->
-    <style>
-      body {
-        font-size: 1.2em;
-      }
-      h1 {
-        font-size: 2em;
-      }
-      p {
-        font-size: 1.2em;
-      }
-      label, input, button {
-        font-size: 1.2em;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Survey Instructions: Desk</h1>
-    <p>Thank you for taking the time to do this survey! We expect it to take between 30 min and an hour.</p>
-    <p>Below is a link to a youtube video. This video was shown to participants in our study, along with asking them to identify any user needs.</p>
-    <p>Please take some time to watch the video 2 times, and feel free to reference the video while doing this survey.</p>
-    <p>For your reference, here are the definitions of the terms you will see:</p>
-    <p><strong>Is the need impactful?:</strong> The need has the potential to create a real difference. This will delight the user.</p>
-    <p><strong>Is it an implicit need?:</strong> This is not a common requirement. Not a general requirement given to the designers.</p>
-    <p><strong>Is it obvious?:</strong> In all circumstances, the majority of the users will express this need. If 20 users were interviewed, the majority will share this need</p>
-    <p><strong>Is it inefficient?</strong>: This will not have a positive effect on the user experience. Not going to improve the experience with the product, service or system.</p>
-    <p><strong>To start, please open the following YouTube video in a separate window and then push begin survey: <a href="https://youtu.be/ewurD-Ge8Ys" target="_blank">https://youtu.be/ewurD-Ge8Ys</a></strong></p>
-    <form method="post">
-      <label for="name">Your Name:</label>
-      <input type="text" id="name" name="name" value="{{ name }}" required>
-      <label for="email">Your Email:</label>
-      <input type="text" id="email" name="email" value="{{ email }}" required>
-      <button type="submit">Start Survey</button>
-    </form>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survey Instructions: Desk</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      /* text-align: center; */
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #007bff;
+      text-align: center;
+    }
+    p {
+      font-size: 1.2em;
+      line-height: 1.6;
+    }
+    a {
+      font-size: 1.2em;
+      line-height: 1.6;
+    }
+    form {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label, input, button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      font-size: 1.2em;
+    }
+    input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .link {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Survey Instructions: Desk</h1>
+  <p>Thank you for taking the time to do this survey! We expect it to take between 30 min and an hour.</p>
+  <p>Below is a link to a YouTube video. This video was shown to participants in our study, along with asking them to identify any user needs.</p>
+  <p>Please watch the video twice through before starting, and feel free to reference the video while doing this survey.</p>
+  <p>For your reference, here are the definitions of the terms you will see:</p>
+  <p><strong>Is the need impactful?</strong> The need has the potential to create a real difference. This will delight the user.</p>
+  <p><strong>Is it an implicit need?</strong> This is not a common requirement. Not a general requirement given to the designers.</p>
+  <p><strong>Is it obvious?</strong> In all circumstances, the majority of the users will express this need. If 20 users were interviewed, the majority will share this need.</p>
+  <p><strong>Is it inefficient?</strong> This will not have a positive effect on the user experience. Not going to improve the experience with the product, service, or system.</p>
+  <div class="link">
+    <p><strong>To start, please open the following YouTube video in a separate window and then push begin survey:</strong></p>
+    <a href="https://youtu.be/ewurD-Ge8Ys" target="_blank">Watch Video</a>
+  </div>
+  <form method="post">
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" name="name" value="{{ name }}" required>
+    <label for="email">Your Email:</label>
+    <input type="text" id="email" name="email" value="{{ email }}" required>
+    <button type="submit">Start Survey</button>
+  </form>
+</body>
 </html>
