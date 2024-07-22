@@ -11,7 +11,7 @@ for i,current_dict in enumerate(groups_dicts):
     name = video_names[i]
     groups.pop(0)
     for j,group in enumerate(groups):
-        links_dict_online[name].append(f'https://bookermit.pythonanywhere.com/{name}/{j}/instructions')
+        links_dict_online[name].append(f'https://ideation.pythonanywhere.com/{name}/{j}/instructions')
         links_dict_local[name].append(f'http://127.0.0.1:5000/{name}/{j}/instructions')
 
 links_df = pd.DataFrame()
