@@ -161,7 +161,7 @@ def save_response(name, email, phrase, responses, video, person_group_text):
     except Exception as e:
         print(f"Error saving to Realtime Database: {e}")
 
-if __name__ == "__main__":
+if __name__ == "__main__": #comment or delete this if running on real website
     print('URL for desk group 1a: http://127.0.0.1:5000/desk/0/instructions')
     print('URL for vacuum group 1b: http://127.0.0.1:5000/vacuum/1/instructions')
 
