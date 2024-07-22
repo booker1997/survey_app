@@ -7,9 +7,9 @@ needs_vacuum = [need for need in list(needs_dict['Need (vacuum)']) if type(need)
 needs_desk = [need for need in list(needs_dict['Need (Desk)']) if type(need) == str ]
 
 
+print(needs_dict.columns.tolist(),'HERE')
 
-
-def make_fully_random_groups(desk_or_vacuum, times_each_need_needs_to_be_seen,grouping_size):
+def make_fully_random_groups(desk_or_vacuum, n_repeat_each_need,subgroups):
     if desk_or_vacuum == 'desk':
         final_file_name = 'need_groups_desk.csv'
         need_list = needs_desk
@@ -48,43 +48,58 @@ def make_fully_random_groups(desk_or_vacuum, times_each_need_needs_to_be_seen,gr
     groups_df.to_csv(final_file_name)
     print(groups_df)
 
-def make_groups_split_whole_in_two(desk_or_vacuum,n_repeat):
+def make_groups(desk_or_vacuum,n_repeat_each_need,subgroups):
     if desk_or_vacuum == 'desk':
-        final_file_name = 'need_groups_desk.csv'
+        final_file_name = 'data/need_groups_desk.csv'
         need_list = np.array(needs_desk)
     else:
-        final_file_name = 'need_groups_vacuum.csv'
+        final_file_name = 'data/need_groups_vacuum.csv'
         need_list= np.array(needs_vacuum)
     
     print(len(need_list))
-    half_length = int((len(need_list))/2)
+    # half_length = int((len(need_list))/2)
     groups_dict = {}
-    for i in range(0,n_repeat):
+    def generate_key(index):
+        """Generates the key for a given index in the sequence a, b, ..., z, aa, ab, ..., zz, aaa, ..."""
+        letters = []
+        while index >= 0:
+            letters.append(chr(index % 26 + ord('a')))
+            index = index // 26 - 1
+        return ''.join(reversed(letters))
+    sub_group_dict = {i: generate_key(i) for i in range(500)}
+    
+    for i in range(0,n_repeat_each_need):
         need_indexes = list(range(0,len(need_list)))
         random.seed(i)
         random.shuffle(need_indexes)
-        first_group_i = need_indexes[:half_length]
-        second_group_i= need_indexes[half_length:]
-        if len(first_group_i) != len(second_group_i):
-            groups_dict[f'Group {i+1}a'] = list(need_list[first_group_i])+ [0]
-            groups_dict[f'Group {i+1}b'] = list(need_list[second_group_i]) 
-        else:
-            groups_dict[f'Group {i+1}a'] = list(need_list[first_group_i])
-            groups_dict[f'Group {i+1}b'] = list(need_list[second_group_i]) 
-       
+        previous_i = 0
+        for j in range(0,subgroups):
+            current_i = int((len(need_list))*((j+1)/subgroups))
+            group_i = need_indexes[previous_i:current_i]
+            groups_dict[f'Group {i+1}{sub_group_dict[j]}'] = list(need_list[group_i]) 
+            previous_i = current_i
+            # if len(first_group_i) != len(second_group_i):
+            #     groups_dict[f'Group {i+1}a'] = list(need_list[first_group_i])+ [0]
+            #     groups_dict[f'Group {i+1}b'] = list(need_list[second_group_i]) 
+            # else:
+            #     groups_dict[f'Group {i+1}a'] = list(need_list[first_group_i])
+            #     groups_dict[f'Group {i+1}b'] = list(need_list[second_group_i]) 
+    max_length = max(len(value) for value in groups_dict.values())
+    for key in groups_dict:
+        print(len(groups_dict[key]),max_length)
+        print(key)
+        if len(groups_dict[key])<max_length:
+            groups_dict[key].append(0)
 
-        groups_df = pd.DataFrame(groups_dict)
-        groups_df.to_csv(final_file_name)
-        print(groups_df)
+
+
+
+    groups_df = pd.DataFrame(groups_dict)
+    groups_df.to_csv(final_file_name)
+    print(groups_df)
 
 
     
-
-# desk_or_vacuum = 'vacuum'
-desk_or_vacuum = 'desk'
-times_each_need_needs_to_be_seen = 3
-grouping_size = 56
-
-# make_fully_random_groups(desk_or_vacuum,times_each_need_needs_to_be_seen,grouping_size)
-
-make_groups_split_whole_in_two(desk_or_vacuum,n_repeat=3)
+if __name__ == '__main__':
+    make_groups('desk',n_repeat_each_need=3,subgroups=6)
+    make_groups('vacuum',n_repeat_each_need=3,subgroups=6)

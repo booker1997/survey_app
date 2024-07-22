@@ -17,7 +17,7 @@ firebase_admin.initialize_app(cred, {
 
 # Global variable to store phrases
 actual_phrases = []
-
+groups = []
 # Reference to the Realtime Database
 database_ref = db.reference('responses')
 
@@ -43,12 +43,15 @@ def init_csv(CSV_FILE):
 @app.route('/<video>/<int:group>/instructions', methods=['GET', 'POST'])
 def instructions(video, group):
     global actual_phrases
+    global groups
     session['name'] = request.form.get('name')
     session['email'] = request.form.get('email')
     groups = ['Group 1a', 'Group 1b', 'Group 2a', 'Group 2b', 'Group 3a', 'Group 3b']
     if video == 'desk':
         needs_dict = pd.read_csv('data/need_groups_desk.csv')
-        phrases = [[need for need in list(needs_dict[GROUP]) if type(need) == str] for GROUP in groups]
+        groups = needs_dict.columns.tolist()
+        groups.pop(0)
+        phrases = [[need for need in list(needs_dict[GROUP]) if len(need)>1] for GROUP in groups]
         actual_phrases = phrases[group] 
         random.shuffle(actual_phrases)
         # File path for the CSV file
@@ -56,7 +59,9 @@ def instructions(video, group):
         session['instructions_file'] = 'instructions_desk.html'
     else:
         needs_dict = pd.read_csv('data/need_groups_vacuum.csv')
-        phrases = [[need for need in list(needs_dict[GROUP]) if type(need) == str] for GROUP in groups]
+        groups = needs_dict.columns.tolist()
+        groups.pop(0)
+        phrases = [[need for need in list(needs_dict[GROUP]) if len(need)>1] for GROUP in groups]
         actual_phrases = phrases[group] 
         random.shuffle(actual_phrases)
         # File path for the CSV file
@@ -76,15 +81,10 @@ def instructions(video, group):
 
 @app.route('/<video>/<int:group>/survey/<name>/<email>/<int:index>', methods=['GET', 'POST'])
 def survey(video, group, name, email, index):
-    groups = ['Group 1a', 'Group 1b', 'Group 2a', 'Group 2b', 'Group 3a', 'Group 3b']
     global actual_phrases
-    # if video == 'desk':
-    #     needs_dict = pd.read_csv('data/need_groups_desk.csv')
-    #     phrases = [[need for need in list(needs_dict[GROUP]) if type(need) == str] for GROUP in groups]
-    # else:
-    #     needs_dict = pd.read_csv('data/need_groups_vacuum.csv')
-    #     phrases = [[need for need in list(needs_dict[GROUP]) if type(need) == str] for GROUP in groups]
+    global groups
     
+    print(groups,'GROUPS')
     phrase = actual_phrases[index]
     person_group_text = groups[group]
     
