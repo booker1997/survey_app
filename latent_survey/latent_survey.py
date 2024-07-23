@@ -10,7 +10,7 @@ app.secret_key = 'IDEATION2024'
 
 # Set up Firebase Realtime Database
 
-cred = credentials.Certificate('firebase_secret.json')
+cred = credentials.Certificate('firebase_secret.json') # YOU NEED TO COPY REAL SECRET CREDENTIALS HERE ON WEBSITE
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://needs-proj-default-rtdb.firebaseio.com/'
 })
@@ -48,7 +48,7 @@ def instructions(video, group):
     session['email'] = request.form.get('email')
     groups = ['Group 1a', 'Group 1b', 'Group 2a', 'Group 2b', 'Group 3a', 'Group 3b']
     if video == 'desk':
-        needs_dict = pd.read_csv('data/need_groups_desk.csv')
+        needs_dict = pd.read_csv('data/need_groups_desk.csv') # THESE NEED TO CHANGE FOR WEBSITE
         groups = needs_dict.columns.tolist()
         groups.pop(0)
         phrases = [[need for need in list(needs_dict[GROUP]) if len(need)>1] for GROUP in groups]
@@ -58,7 +58,7 @@ def instructions(video, group):
         session['CSV_FILE'] = 'data/responses_desk.csv'
         session['instructions_file'] = 'instructions_desk.html'
     else:
-        needs_dict = pd.read_csv('data/need_groups_vacuum.csv')
+        needs_dict = pd.read_csv('data/need_groups_vacuum.csv') # THESE NEED TO CHANGE FOR WEBSITE
         groups = needs_dict.columns.tolist()
         groups.pop(0)
         phrases = [[need for need in list(needs_dict[GROUP]) if len(need)>1] for GROUP in groups]
@@ -161,8 +161,8 @@ def save_response(name, email, phrase, responses, video, person_group_text):
     except Exception as e:
         print(f"Error saving to Realtime Database: {e}")
 
-if __name__ == "__main__": #comment or delete this if running on real website
-    print('URL for desk group 1a: http://127.0.0.1:5000/desk/0/instructions')
-    print('URL for vacuum group 1b: http://127.0.0.1:5000/vacuum/1/instructions')
+# if __name__ == "__main__": #comment or delete this if running on real website
+#     print('URL for desk group 1a: http://127.0.0.1:5000/desk/0/instructions')
+#     print('URL for vacuum group 1b: http://127.0.0.1:5000/vacuum/1/instructions')
 
-    app.run(debug=True)
+#     app.run(debug=True)
